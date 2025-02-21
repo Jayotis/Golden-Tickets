@@ -1,0 +1,19 @@
+stages:
+  - replace
+
+variables:
+  README_TEMP: "README.tmp"
+
+replace_readme:
+  stage: replace
+  before_script:
+    - echo 'Replacing readme for F-droid'
+  script:
+    - sed -e '//,//{//!b;d;}' README.md > ${README_TEMP}
+    - mv ${README_TEMP} README.md
+  only:
+    variables:
+      - $CI_PROJECT_NAME
+  artifacts:
+    paths:
+      - README.md
